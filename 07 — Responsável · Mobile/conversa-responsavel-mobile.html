@@ -589,8 +589,8 @@
       </div>
 
       <!-- Área de Composição / Envio -->
-      <form class="composer-bar" onsubmit="event.preventDefault();" aria-label="Escrever mensagem">
-        <input type="text" class="composer-input" placeholder="Escreva uma mensagem…" aria-label="Escreva uma mensagem">
+      <form class="composer-bar" id="mobileComposer" aria-label="Escrever mensagem">
+        <input type="text" class="composer-input" id="mobileComposerInput" placeholder="Escreva uma mensagem…" aria-label="Escreva uma mensagem">
         <button type="submit" class="btn-send" title="Enviar mensagem">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="22" y1="2" x2="11" y2="13"/>
@@ -622,7 +622,7 @@
         <span class="nav-label">Evolução</span>
       </a>
 
-      <a href="#" class="nav-tab">
+      <a href="perfil-responsavel-mobile.html" class="nav-tab">
         <div class="nav-icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="7" r="4"/>
@@ -632,6 +632,32 @@
         <span class="nav-label">Meu perfil</span>
       </a>
     </nav>
+
+    <script>
+      const professorNames = {
+        'ana-almeida': 'Prof. Ana Almeida',
+        'joao-martins': 'Prof. João Martins',
+        'camila-rocha': 'Prof.ª Camila Rocha',
+        'pedro-henrique': 'Prof. Pedro Henrique',
+        'beatriz-costa': 'Prof.ª Beatriz Costa',
+        'marcos-lima': 'Prof. Marcos Lima'
+      };
+      const selectedProfessor = professorNames[new URLSearchParams(location.search).get('professor')];
+      if (selectedProfessor) document.querySelector('.contact-name').textContent = selectedProfessor;
+
+      document.getElementById('mobileComposer').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const input = document.getElementById('mobileComposerInput');
+        const text = input.value.trim();
+        if (!text) return;
+        const message = document.createElement('div');
+        message.className = 'message-row outgoing';
+        message.innerHTML = `<div class="message-bubble outgoing-bubble"><p class="message-text"></p><div class="message-meta"><span class="message-time">Agora</span><span class="message-check">✓✓</span></div></div>`;
+        message.querySelector('.message-text').textContent = text;
+        document.querySelector('.messages-stream').appendChild(message);
+        input.value = '';
+      });
+    </script>
 
   </main>
 

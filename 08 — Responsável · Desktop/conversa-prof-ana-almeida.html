@@ -995,7 +995,7 @@
 
       <!-- Rodapé da Sidebar: Perfil do Responsável -->
       <div class="sidebar-footer">
-        <button class="user-profile-button" type="button" aria-label="Menu do responsável">
+        <button class="user-profile-button" type="button" aria-label="Abrir perfil do responsável" onclick="location.href='perfil.html'">
           <div class="user-avatar">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -1354,6 +1354,21 @@
         searchInput.addEventListener('input', applyFilters);
       }
     });
+  </script>
+  <script>
+    const professorNames = {
+      'ana-almeida': 'Prof.ª Ana Almeida',
+      'joao-martins': 'Prof. João Martins',
+      'camila-rocha': 'Prof.ª Camila Rocha',
+      'pedro-henrique': 'Prof. Pedro Henrique',
+      'beatriz-costa': 'Prof.ª Beatriz Costa',
+      'marcos-lima': 'Prof. Marcos Lima'
+    };
+    const selectedProfessor = professorNames[new URLSearchParams(location.search).get('professor')];
+    if (selectedProfessor) {
+      document.querySelector('.chat-interlocutor-name').textContent = selectedProfessor;
+      document.querySelector('.chat-panel').setAttribute('aria-label', `Janela de mensagens com ${selectedProfessor}`);
+    }
   </script>
 </body>
 </html>

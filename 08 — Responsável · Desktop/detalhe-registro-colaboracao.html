@@ -795,7 +795,7 @@
 
       <!-- Perfil do Responsável no Rodapé -->
       <div class="sidebar-footer">
-        <button class="user-profile-button" type="button" aria-label="Menu do responsável">
+        <button class="user-profile-button" type="button" aria-label="Abrir perfil do responsável" onclick="location.href='perfil.html'">
           <div class="user-avatar">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -937,7 +937,7 @@
             <h3 class="contact-title">Quer conversar sobre este registro?</h3>
             <p class="contact-desc">Se precisar de mais informações, entre em contato com a equipe pedagógica.</p>
           </div>
-          <a href="mensagens.html" class="btn-message">
+          <a href="iniciar-mensagem.html?origem=registro" class="btn-message">
             Enviar mensagem
           </a>
         </div>
@@ -955,6 +955,19 @@
       </footer>
     </main>
   </div>
+
+  <script>
+    const record = new URLSearchParams(location.search).get('registro');
+    const recordData = {
+      participacao: { dimension: 'Participação', title: 'Contribuiu na discussão em sala', description: 'Compartilhou uma ideia durante a atividade da turma.' },
+      responsabilidade: { dimension: 'Responsabilidade', title: 'Organização dos materiais', description: 'Não organizou os materiais corretamente ao final da aula.' }
+    }[record];
+    if (recordData) {
+      document.querySelector('.record-dimension-title').textContent = recordData.dimension;
+      document.querySelector('.observation-title').textContent = recordData.title;
+      document.querySelector('.observation-desc').textContent = recordData.description;
+    }
+  </script>
 
 </body>
 </html>

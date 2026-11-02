@@ -694,7 +694,7 @@
 
       <!-- Perfil do Responsável no Rodapé -->
       <div class="sidebar-footer">
-        <button class="user-profile-button" type="button" aria-label="Menu do responsável">
+        <button class="user-profile-button" type="button" aria-label="Abrir perfil do responsável" onclick="location.href='perfil.html'">
           <div class="user-avatar">
             <!-- Ícone Silhueta de Usuário oficial do Penpot -->
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -777,8 +777,8 @@
           
           <div class="filters-bar">
             <div class="filters-left">
-              <button class="filter-btn-all" type="button">Todos</button>
-              <button class="filter-btn-dropdown" type="button">
+              <button class="filter-btn-all active" type="button" data-filter="all">Todos</button>
+              <button class="filter-btn-dropdown" type="button" data-filter="dimension">
                 <span>Filtrar por dimensão</span>
                 <span aria-hidden="true">▾</span>
               </button>
@@ -790,7 +790,7 @@
         <!-- Lista de Registros Avaliados -->
         <div class="records-list">
           <!-- Registro 1: Colaboração (Positiva) -->
-          <article class="record-card">
+          <article class="record-card" data-dimension="colaboração">
             <div class="record-top">
               <span class="record-date">21 OUT 2026</span>
               <span class="dimension-badge">COLABORAÇÃO</span>
@@ -807,7 +807,7 @@
           </article>
 
           <!-- Registro 2: Participação (Positiva) -->
-          <article class="record-card">
+          <article class="record-card" data-dimension="participação">
             <div class="record-top">
               <span class="record-date">19 OUT 2026</span>
               <span class="dimension-badge">PARTICIPAÇÃO</span>
@@ -816,7 +816,7 @@
             <p class="record-desc">Compartilhou uma ideia durante a atividade da turma.</p>
             <div class="record-bottom">
               <span class="status-badge positiva">Positiva</span>
-              <a href="detalhe-registro-participacao.html" class="record-action">
+              <a href="detalhe-registro-colaboracao.html?registro=participacao" class="record-action">
                 <span>Ver registro</span>
                 <span aria-hidden="true">→</span>
               </a>
@@ -824,7 +824,7 @@
           </article>
 
           <!-- Registro 3: Responsabilidade (A desenvolver) -->
-          <article class="record-card">
+          <article class="record-card" data-dimension="responsabilidade">
             <div class="record-top">
               <span class="record-date">16 OUT 2026</span>
               <span class="dimension-badge">RESPONSABILIDADE</span>
@@ -833,7 +833,7 @@
             <p class="record-desc">Não organizou os materiais corretamente ao final da aula.</p>
             <div class="record-bottom">
               <span class="status-badge desenvolver">A desenvolver</span>
-              <a href="detalhe-registro-responsabilidade.html" class="record-action">
+              <a href="detalhe-registro-colaboracao.html?registro=responsabilidade" class="record-action">
                 <span>Ver registro</span>
                 <span aria-hidden="true">→</span>
               </a>
@@ -843,6 +843,34 @@
       </section>
     </main>
   </div>
+
+  <script>
+    const recordCards = [...document.querySelectorAll('.record-card')];
+    const allRecordsButton = document.querySelector('[data-filter="all"]');
+    const dimensionButton = document.querySelector('[data-filter="dimension"]');
+    const recordsCount = document.querySelector('.records-count');
+    let dimensionFilterActive = false;
+
+    function applyRecordFilter() {
+      recordCards.forEach((card) => {
+        card.hidden = dimensionFilterActive && card.dataset.dimension !== 'responsabilidade';
+      });
+      const visible = recordCards.filter((card) => !card.hidden).length;
+      recordsCount.textContent = `${visible} registro${visible === 1 ? '' : 's'} encontrado${visible === 1 ? '' : 's'}`;
+      allRecordsButton.classList.toggle('active', !dimensionFilterActive);
+      dimensionButton.classList.toggle('active', dimensionFilterActive);
+    }
+
+    allRecordsButton.addEventListener('click', () => {
+      dimensionFilterActive = false;
+      applyRecordFilter();
+    });
+
+    dimensionButton.addEventListener('click', () => {
+      dimensionFilterActive = !dimensionFilterActive;
+      applyRecordFilter();
+    });
+  </script>
 
 </body>
 </html>

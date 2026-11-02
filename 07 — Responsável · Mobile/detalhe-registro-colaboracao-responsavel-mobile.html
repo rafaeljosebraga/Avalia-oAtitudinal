@@ -671,7 +671,7 @@
         <span class="nav-label">Evolução</span>
       </a>
 
-      <a href="#" class="nav-tab">
+      <a href="perfil-responsavel-mobile.html" class="nav-tab">
         <div class="nav-icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="7" r="4"/>
@@ -681,6 +681,19 @@
         <span class="nav-label">Meu perfil</span>
       </a>
     </nav>
+
+    <script>
+      const record = new URLSearchParams(location.search).get('registro');
+      const recordData = {
+        participacao: { dimension: 'Participação', title: 'Contribuiu na discussão em sala', description: 'Compartilhou uma ideia durante a atividade da turma.' },
+        responsabilidade: { dimension: 'Responsabilidade', title: 'Organização dos materiais', description: 'Não organizou os materiais corretamente ao final da aula.' }
+      }[record];
+      if (recordData) {
+        document.querySelector('.dimension-title').textContent = recordData.dimension;
+        document.querySelector('.observation-title').textContent = recordData.title;
+        document.querySelector('.observation-desc').textContent = recordData.description;
+      }
+    </script>
 
   </main>
 
